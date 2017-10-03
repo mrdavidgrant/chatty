@@ -6,7 +6,7 @@ class MessageList extends Component {
   render() {
     const messages = this.props.messages
     const messageItems = messages.map((message) => {
-      return (<Message message = {message}/>)}
+      return (<Message key = {message.key} message = {message}/>)}
     )
 
     console.log("Rendering <MessageList/>")
