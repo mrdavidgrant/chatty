@@ -6,6 +6,6 @@ require('../styles/application.scss');
 // Render the top-level React component
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from './App.jsx';
+import App from './App.jsx';
 
-ReactDOM.render(<Navbar />, document.getElementById('react-root'));
+ReactDOM.render(<App />, document.getElementById('react-root'));
