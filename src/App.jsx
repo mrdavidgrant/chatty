@@ -36,13 +36,30 @@ class App extends Component {
     }, 3000);
   }
 
+
+
+  changeUser(e) {
+    const newUser = e.target.value
+    this.setState({currentUser: {name: newUser}})
+  }
+
+  handleChange(e) {
+    if(e.key == "Enter"){
+    e.preventDefault
+    const newMessage ={ username: this.state.currentUser.name, content: e.target.value }
+    const messages = this.state.messages.concat(newMessage)
+    this.setState({messages: messages})
+
+    }
+  }
+
   render() {
     console.log("Rendering <App/>");
     return (
     <div>
       <NavBar />  
       <MessageList messages = {this.state.messages} />
-      <ChatBar name = {this.state.currentUser.name} />
+      <ChatBar name = {this.state.currentUser.name} handleChange = {this.handleChange.bind(this)} changeUser = {this.changeUser.bind(this)} />
     </div>
     );
   }
