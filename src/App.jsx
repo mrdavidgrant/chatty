@@ -21,12 +21,14 @@ class App extends Component {
     }
   }
 
+ 
+
   render() {
     console.log("Rendering <App/>");
     return (
     <div>
       <NavBar />  
-      <MessageList />
+      <MessageList messages = {this.state.messages} />
       <ChatBar name = {this.state.currentUser.name} />
     </div>
     );
