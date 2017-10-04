@@ -1,4 +1,4 @@
-React Boilerplate
+The Chatty App
 =====================
 
 A minimal and light dev environment for ReactJS.
@@ -8,11 +8,8 @@ A minimal and light dev environment for ReactJS.
 Clone the boilerplate and create your own git repo.
 
 ```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
+git clone git@github.com:mrdavidgrant/chatty.git
+cd chatty
 ```
 
 Install the dependencies and start the server.
@@ -23,23 +20,23 @@ npm start
 open http://localhost:3000
 ```
 
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
+Move to the ./server folder
 
 ```
-npm run lint
+node server.js
 ```
 
 ### Dependencies
 
 * React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* React-Dom
+* express
+* randomcolor
+* uuid
+* ws
+
+### Extras/Stretch Goals
+
+* As an added challenge, I parsed out image URL's ending in .jpg, .gif, or .png from any messages, and displayed the image in chat.  The original URL was removed from the message.
+
+* Message storage was moved from the client to the server.  Any client, upon first login, will be sent the last 10 messages on the server.
