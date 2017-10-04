@@ -48,10 +48,9 @@ class App extends Component {
     this.sendMessage(newMessage)
     this.setState({currentUser: {name: newUser}})
   }
-
-  handleChange(e) {
+  
+  handleKeyDown(e) {
     if(e.key == "Enter"){
-      e.preventDefault
       const newMessage ={ type: 'postMessage', userid: this.state.userid, username: this.state.currentUser.name, content: e.target.value}
       this.sendMessage(newMessage)
       e.target.value = ''
@@ -68,7 +67,7 @@ class App extends Component {
     <div>
       <NavBar clientCount = {this.state.clientCount}/>  
       <MessageList messages = {this.state.messages}  changeClientCount = {this.changeClientCount} />
-      <ChatBar name = {this.state.currentUser.name} handleChange = {this.handleChange.bind(this)} changeUser = {this.changeUser.bind(this)}/>
+      <ChatBar name = {this.state.currentUser.name} handleKeyDown = {this.handleKeyDown.bind(this)} changeUser = {this.changeUser.bind(this)}/>
     </div>
     );
   }

@@ -6,7 +6,7 @@ class Chatbar extends Component {
     return (
       <div className="chatbar">
           <input className="chatbar-username" defaultValue={this.props.name} onBlur={this.props.changeUser}/>
-          <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyDown={this.props.handleChange}/>
+          <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyDown={this.props.handleKeyDown}/>
       </div>
     );
   }
