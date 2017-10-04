@@ -2,7 +2,7 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 
 h1 {
-  color: tomato;
+  color: #47BBFF;
 }
 body {
   background: white;
@@ -13,7 +13,7 @@ body {
 }
 
 .chatbar {
-  background: tomato;
+  background: #47BBFF;
   border-top: 1px solid black;
   bottom: 0;
   display: flex;
@@ -44,6 +44,8 @@ body {
 .message {
   display: flex;
   padding: 5px;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 
 .message.system {
@@ -68,7 +70,7 @@ body {
 }
 
 .navbar {
-  background: tomato;
+  background: #47BBFF;
   border-bottom: 1px solid black;
   height: 60px;
   left: 0;
@@ -95,4 +97,18 @@ body {
   float: right;
   font-weight: bold;
   padding: 20px 0;
+}
+
+.message-image {
+  max-width: 60%;
+  margin: 0 auto;
+  max-height: 300px;
+  display: block;
+}
+
+.message-image-div {
+  width: 100%;
+  margin: 0 auto;
+  align-self: center;
+  justify-content: center;
 }
