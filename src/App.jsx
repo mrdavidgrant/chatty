@@ -7,49 +7,42 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ]
+      currentUser: {name: "Anonymous"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      messages: []
     }
   }
 
- componentDidMount() {
-  console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      // Add a new message to the list of messages in the data store
-      const newMessage = {username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage)
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
+
+  componentDidMount() {
+    this.socket = new WebSocket('ws://localhost:3001')
+    this.socket.onopen = (e) => {
+      console.log('connected to websocket')
+    }
+    this.socket.onmessage = (e) => {
+      const messages = this.state.messages.concat(JSON.parse(event.data))
       this.setState({messages: messages})
-    }, 3000);
+    }
   }
 
-
+  sendMessage(msg) {
+    this.socket.send(JSON.stringify(msg))
+  }
 
   changeUser(e) {
-    const newUser = e.target.value
-    this.setState({currentUser: {name: newUser}})
+    if(e.key == "Enter"){
+      const newUser = e.target.value
+      const newMessage = { type: 'postNotification', content: `${this.state.currentUser.name} has changed their name to ${newUser}`}
+      this.sendMessage(newMessage)
+      this.setState({currentUser: {name: newUser}})
+    }
   }
 
   handleChange(e) {
     if(e.key == "Enter"){
-    e.preventDefault
-    const newMessage ={ username: this.state.currentUser.name, content: e.target.value }
-    const messages = this.state.messages.concat(newMessage)
-    this.setState({messages: messages})
-
+      e.preventDefault
+      const newMessage ={ type: 'postMessage', username: this.state.currentUser.name, content: e.target.value }
+      this.sendMessage(newMessage)
+      e.target.value = ''
     }
   }
 
