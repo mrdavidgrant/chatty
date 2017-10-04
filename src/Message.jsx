@@ -17,6 +17,11 @@ class Message extends Component {
             {this.props.message.content}
           </div>
         )
+        break
+      default:
+        console.log("unknown message")
+        return null
+        break
     }
   }
 }

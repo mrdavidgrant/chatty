@@ -8,7 +8,8 @@ class App extends Component {
     super(props)
     this.state = {
       currentUser: {name: "Anonymous"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      messages: [],
+      clientCount: 0
     }
   }
 
@@ -19,8 +20,14 @@ class App extends Component {
       console.log('connected to websocket')
     }
     this.socket.onmessage = (e) => {
-      const messages = this.state.messages.concat(JSON.parse(event.data))
-      this.setState({messages: messages})
+      let newMsg = JSON.parse(event.data)
+      console.log(newMsg)
+      if (newMsg.type != 'incomingCount') {
+        const messages = this.state.messages.concat(newMsg)
+        this.setState({messages: messages})
+      } else {
+        this.setState({clientCount: newMsg.content})
+      }
     }
   }
 
@@ -46,13 +53,17 @@ class App extends Component {
     }
   }
 
+  changeClientCount(num) {
+    this.setState({clientCount: num})
+  }
+
   render() {
     console.log("Rendering <App/>");
     return (
     <div>
-      <NavBar />  
-      <MessageList messages = {this.state.messages} />
-      <ChatBar name = {this.state.currentUser.name} handleChange = {this.handleChange.bind(this)} changeUser = {this.changeUser.bind(this)} />
+      <NavBar clientCount = {this.state.clientCount}/>  
+      <MessageList messages = {this.state.messages}  changeClientCount = {this.changeClientCount} />
+      <ChatBar name = {this.state.currentUser.name} handleChange = {this.handleChange.bind(this)} changeUser = {this.changeUser.bind(this)}/>
     </div>
     );
   }
