@@ -44,18 +44,17 @@ class App extends Component {
   }
 
   changeUser(e) {
-    if(e.key == "Enter"){
+    // if(e.key == "Enter"){
       const newUser = e.target.value
       const newMessage = { type: 'postNotification', userid: this.state.userid, content: `${this.state.currentUser.name} has changed their name to ${newUser}`}
       this.sendMessage(newMessage)
       this.setState({currentUser: {name: newUser}})
-    }
+    // }
   }
 
   handleChange(e) {
     if(e.key == "Enter"){
       e.preventDefault
-      const oldName = this.state.currentUser.name
       const newMessage ={ type: 'postMessage', userid: this.state.userid, username: this.state.currentUser.name, content: e.target.value}
       this.sendMessage(newMessage)
       e.target.value = ''
