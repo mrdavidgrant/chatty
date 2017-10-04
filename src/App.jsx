@@ -7,7 +7,9 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: {name: "Anonymous"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: "Anonymous"}, 
+      userid: '',
+      color: '',
       messages: [],
       clientCount: 0
     }
@@ -22,11 +24,17 @@ class App extends Component {
     this.socket.onmessage = (e) => {
       let newMsg = JSON.parse(event.data)
       console.log(newMsg)
-      if (newMsg.type != 'incomingCount') {
+      switch (newMsg.type) {
+      case 'incomingUser':
+        this.setState({ userid: newMsg.content.userid, color: newMsg.content.color})
+        break
+      case 'incomingCount':
+        this.setState({clientCount: newMsg.content})
+        break
+      default:
         const messages = this.state.messages.concat(newMsg)
         this.setState({messages: messages})
-      } else {
-        this.setState({clientCount: newMsg.content})
+        break
       }
     }
   }
@@ -38,7 +46,7 @@ class App extends Component {
   changeUser(e) {
     if(e.key == "Enter"){
       const newUser = e.target.value
-      const newMessage = { type: 'postNotification', content: `${this.state.currentUser.name} has changed their name to ${newUser}`}
+      const newMessage = { type: 'postNotification', userid: this.state.userid, content: `${this.state.currentUser.name} has changed their name to ${newUser}`}
       this.sendMessage(newMessage)
       this.setState({currentUser: {name: newUser}})
     }
@@ -47,7 +55,8 @@ class App extends Component {
   handleChange(e) {
     if(e.key == "Enter"){
       e.preventDefault
-      const newMessage ={ type: 'postMessage', username: this.state.currentUser.name, content: e.target.value }
+      const oldName = this.state.currentUser.name
+      const newMessage ={ type: 'postMessage', userid: this.state.userid, username: this.state.currentUser.name, content: e.target.value}
       this.sendMessage(newMessage)
       e.target.value = ''
     }
