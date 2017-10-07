@@ -1,5 +1,4 @@
-The Chatty App
-=====================
+# The Chatty App
 
 A minimal and light dev environment for ReactJS.
 
